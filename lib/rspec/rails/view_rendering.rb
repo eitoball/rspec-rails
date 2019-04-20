@@ -102,10 +102,18 @@ module RSpec
 
       # @private
       class EmptyTemplateHandler
-        def self.call(_template)
-          ::Rails.logger.info("  Template rendering was prevented by rspec-rails. Use `render_views` to verify rendered view contents if necessary.")
+        if ::Rails::VERSION::STRING >= '6'
+          def self.call(_template, _source)
+            ::Rails.logger.info("  Template rendering was prevented by rspec-rails. Use `render_views` to verify rendered view contents if necessary.")
 
-          %("")
+            %("")
+          end
+        else
+          def self.call(_template)
+            ::Rails.logger.info("  Template rendering was prevented by rspec-rails. Use `render_views` to verify rendered view contents if necessary.")
+
+            %("")
+          end
         end
       end
 

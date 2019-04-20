@@ -187,4 +187,17 @@ module RSpec::Rails
       end
     end
   end
+
+  describe ViewRendering::EmptyTemplateHandler do
+    describe '.call' do
+      it '' do
+        arity = described_class.method(:call).arity
+        p '*' * 40
+        p ::Rails::VERSION::STRING
+        p '*' * 40
+        expected = ::Rails::VERSION::STRING >= '6' ? 2 : 1
+        expect(arity).to eq(expected)
+      end
+    end
+  end
 end
